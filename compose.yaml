@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  backend:
+    build: ./backend
+    image: backend
+    container_name: polis-backend
+    ports:
+      - 8080:8080
+    volumes:
+      - ./backend/src:/backend/src
+    env_file: ./backend/.env.local
+    depends_on:
+      - database
+  database:
+    build: ./database
+    image: db
+    container_name: polis-db
+    ports:
+      - 5555:3306
+    environment:
+      MARIADB_ROOT_PASSWORD: alsdkj/(>SNasdjoqJsdSL
+      MARIADB_DATABASE: polis-app
