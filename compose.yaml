@@ -17,6 +17,4 @@ services:
     container_name: polis-db
     ports:
       - 5555:3306
-    environment:
-      MARIADB_ROOT_PASSWORD: alsdkj/(>SNasdjoqJsdSL
-      MARIADB_DATABASE: polis-app
+    env_file: ./database/.env.local
