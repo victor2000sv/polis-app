@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-module.exports = function ({}) {
+module.exports = function ({ testRouter, eventsRouter }) {
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
   app.use(function (req, res, next) {
@@ -16,6 +16,9 @@ module.exports = function ({}) {
 
     next();
   });
+
+  app.use("/test", testRouter);
+  app.use("/events", eventsRouter);
 
   return app;
 };
