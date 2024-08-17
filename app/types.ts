@@ -22,3 +22,23 @@ export type Coordinate = {
   latitude: number;
   longitude: number;
 };
+
+export type WeekDay =
+  | "Måndag"
+  | "Tisdag"
+  | "Onsdag"
+  | "Torsdag"
+  | "Fredag"
+  | "Lördag"
+  | "Söndag";
+
+export type Day = {
+  date: number;
+  day: WeekDay;
+  month: number;
+  year: number;
+  fullDate: Date;
+  isCurrent: boolean;
+};
+
+export type Direction = "Left" | "Right" | "Up" | "Down";

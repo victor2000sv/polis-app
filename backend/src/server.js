@@ -24,7 +24,11 @@ async function startupCrons() {
   } catch (e) {
     console.log(e.message);
   }
-  await crons.startLoop();
+  try {
+    await crons.startLoop();
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 startupCrons();

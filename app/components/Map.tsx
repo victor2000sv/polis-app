@@ -121,10 +121,21 @@ export default function Map({
   }
 
   function selectMarker(events: Event[]) {
-    if (z < 0.6 || events.length == 1) {
-      let newRegion = currentRegion;
-      newRegion.latitude = parseFloat(events[0].latitude);
-      newRegion.longitude = parseFloat(events[0].longitude);
+    if (
+      events.filter(
+        (event) =>
+          event.latitude == events[0].latitude &&
+          event.longitude == events[0].longitude
+      ).length == events.length ||
+      events.length == 1
+    ) {
+      const newRegion: Region = {
+        latitude: parseFloat(events[0].latitude),
+        longitude: parseFloat(events[0].longitude),
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      };
+
       mapRef.current?.animateToRegion(newRegion);
       setCurrentRegion(newRegion);
 
@@ -141,7 +152,7 @@ export default function Map({
 
   useEffect(() => {
     onRegionChange(initialRegion);
-  }, []);
+  }, [events]);
 
   return (
     <MapView
