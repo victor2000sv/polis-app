@@ -16,5 +16,16 @@ module.exports = function ({ eventsData }) {
     }
   });
 
+  router.get("/types", async (req, res) => {
+    try {
+      const types = await eventsData.getTypes();
+      if (types.length == 0) return res.status(404).end();
+      res.status(200).json(types);
+    } catch (error) {
+      console.log(error);
+      res.status(500).end();
+    }
+  });
+
   return router;
 };

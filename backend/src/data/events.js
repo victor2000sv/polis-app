@@ -12,8 +12,13 @@ module.exports = function ({ db }) {
 
     return events;
   }
+  async function getTypes() {
+    const types = await db.query("SELECT * FROM types;");
+    return types;
+  }
 
   return {
     getAll,
+    getTypes,
   };
 };
