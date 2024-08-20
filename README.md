@@ -3,6 +3,8 @@ Denna app är ett snabbt exempel inom React Native. Appen är till för att visa
 
 I appen kan man se en karta med dagens fall / brott där du kan läsa mer om fallet. Det går även att se mer statiskt om alla typer av fall.
 
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/qs2dLSb7rCA/0.jpg)](https://www.youtube.com/watch?v=qs2dLSb7rCA)
+
 ## Installation
 ```bash
 git clone git@github.com:victor2000sv/polis-app.git
