@@ -27,6 +27,38 @@ module.exports = function ({ eventsData }) {
     }
   });
 
+  router.get("/types/rank", async (req, res) => {
+    let { year } = req.query;
+    year = year ? year : new Date().getFullYear();
+    try {
+      const rankedTypes = await eventsData.getTypeRankListByYear(year);
+      if (rankedTypes.length == 0) return res.status(404).end();
+      res.status(200).json(rankedTypes);
+    } catch (error) {
+      console.error(error);
+
+      res.status(500).end();
+    }
+  });
+
+  router.get("/types/stats", async (req, res) => {
+    const { type: typeId, year } = req.query;
+    if (!typeId) return res.status(400).end();
+
+    try {
+      const stats = await eventsData.getTypeStatistics(
+        typeId,
+        year ? year : new Date().getFullYear()
+      );
+      if (!stats) return res.status(404).end();
+
+      res.status(200).json(stats);
+    } catch (error) {
+      console.error(error);
+      res.status(500).end();
+    }
+  });
+
   router.get("/list", async (req, res) => {
     let { page, perPage } = req.query;
     page = page ? page : 1;

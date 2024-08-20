@@ -50,3 +50,9 @@ export type EventSection = {
   title: string;
   data: Event[];
 };
+
+export type ChartPillar = {
+  title: string;
+  value: number;
+  active?: boolean;
+};

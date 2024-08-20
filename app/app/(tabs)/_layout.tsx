@@ -11,7 +11,7 @@ export default function Layout() {
           headerShown: true,
           tabBarShowLabel: false,
           tabBarIcon: ({ color }) => (
-            <Ionicons size={24} color={color} name="list-sharp" />
+            <Ionicons size={24} color={color} name="list" />
           ),
         }}
       />
@@ -22,18 +22,18 @@ export default function Layout() {
           headerShown: false,
           tabBarShowLabel: false,
           tabBarIcon: ({ color }) => (
-            <Ionicons size={32} color={color} name="map-sharp" />
+            <Ionicons size={32} color={color} name="map" />
           ),
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name="stats"
         options={{
-          title: "Settings",
-          headerShown: false,
+          title: "Statistik",
+          headerShown: true,
           tabBarShowLabel: false,
           tabBarIcon: ({ color }) => (
-            <Ionicons size={24} color={color} name="settings-sharp" />
+            <Ionicons size={24} color={color} name="stats-chart" />
           ),
         }}
       />
