@@ -1,5 +1,5 @@
 # Polis App
-Denna app är ett snabbt exempel inom React Native. Appen är till för att visa upp fall som sker runt om i Sverige dagligen och all information är hämtad från https://polisen.se/api.
+Denna app är ett exempel inom React Native. Appen är till för att visa upp fall som sker runt om i Sverige dagligen och all information är hämtad från https://polisen.se/api.
 
 I appen kan man se en karta med dagens fall / brott där du kan läsa mer om fallet. Det går även att se mer statiskt om alla typer av fall.
 
