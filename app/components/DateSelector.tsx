@@ -101,8 +101,6 @@ export default function DateSelector({
       });
     }
 
-    console.log(weekDates);
-
     return weekDates;
   }
 
@@ -124,8 +122,8 @@ export default function DateSelector({
         position: "absolute",
         top: 70,
         zIndex: 99,
-        left: 32,
-        right: 32,
+        left: 16,
+        right: 16,
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",

@@ -2,9 +2,12 @@ export type Event = {
   event_id: number;
   summary: string;
   type: number;
+  type_title?: string;
   longitude: string;
   latitude: string;
+  city: string;
   date: string;
+  statistics?: any;
 };
 
 export type Marker = {
@@ -42,3 +45,8 @@ export type Day = {
 };
 
 export type Direction = "Left" | "Right" | "Up" | "Down";
+
+export type EventSection = {
+  title: string;
+  data: Event[];
+};

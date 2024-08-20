@@ -2,7 +2,7 @@ import { Cluster, Coordinate, Event } from "@/types";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useEffect, useRef, useState } from "react";
 import { Dimensions, StyleProp, Text, View, ViewStyle } from "react-native";
-import MapView, { Marker, Region } from "react-native-maps";
+import MapView, { MapMarker, Marker, Region } from "react-native-maps";
 
 export default function Map({
   events,
@@ -129,15 +129,10 @@ export default function Map({
       ).length == events.length ||
       events.length == 1
     ) {
-      const newRegion: Region = {
-        latitude: parseFloat(events[0].latitude),
-        longitude: parseFloat(events[0].longitude),
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-      };
-
-      mapRef.current?.animateToRegion(newRegion);
-      setCurrentRegion(newRegion);
+      zoomToCoordinates(
+        parseFloat(events[0].latitude),
+        parseFloat(events[0].longitude)
+      );
 
       onSelect(events);
     } else {
@@ -150,8 +145,26 @@ export default function Map({
     }
   }
 
+  function zoomToCoordinates(lat: number, lon: number) {
+    const newRegion: Region = {
+      latitude: lat,
+      longitude: lon,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01,
+    };
+
+    mapRef.current?.animateToRegion(newRegion);
+    setCurrentRegion(newRegion);
+  }
+
   useEffect(() => {
     onRegionChange(initialRegion);
+    if (events.length == 1) {
+      zoomToCoordinates(
+        parseFloat(events[0].latitude),
+        parseFloat(events[0].longitude)
+      );
+    }
   }, [events]);
 
   return (

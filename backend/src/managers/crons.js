@@ -49,6 +49,7 @@ module.exports = function ({ db }) {
             item.datetime.split("-")[0],
             time.replace(".", ":")
           ),
+          city: item.location.name,
           latitude,
           longitude,
         };
@@ -58,13 +59,14 @@ module.exports = function ({ db }) {
   };
 
   const uploadEvent = async (event) => {
-    const { event_id, summary, type, longitude, latitude, date } = event;
-    await db.query("INSERT INTO events VALUES (?, ?, ?, ?, ?, ?);", [
+    const { event_id, summary, type, longitude, latitude, city, date } = event;
+    await db.query("INSERT INTO events VALUES (?, ?, ?, ?, ?, ?, ?);", [
       event_id,
       summary,
       type,
       longitude,
       latitude,
+      city,
       date,
     ]);
   };
@@ -80,7 +82,7 @@ module.exports = function ({ db }) {
       throw { code: "ALREADY_SETUP", message: "The db is already setup" };
 
     try {
-      let eventList = [];
+      // let eventList = [];
       let searchDate = new Date();
 
       let allTypes = await db.query("SELECT * FROM types;");
@@ -97,23 +99,38 @@ module.exports = function ({ db }) {
         );
 
         if (events.length == 0) break;
-        eventList = [...eventList, ...events];
+        // eventList = [...eventList, ...events];
         searchDate.setDate(searchDate.getDate() - 1);
+
+        const promises = events
+          .map((event) => ({
+            event_id: event.id,
+            summary: event.summary,
+            type: allTypes[event.type],
+            longitude: event.longitude,
+            latitude: event.latitude,
+            city: event.city,
+            date: event.date,
+          }))
+          .filter((event) => event.type !== undefined)
+          .map((event) => uploadEvent(event));
+
+        await Promise.all(promises);
       }
 
-      const promises = eventList
-        .map((event) => ({
-          event_id: event.id,
-          summary: event.summary,
-          type: allTypes[event.type],
-          longitude: event.longitude,
-          latitude: event.latitude,
-          date: event.date,
-        }))
-        .filter((event) => event.type !== undefined)
-        .map((event) => uploadEvent(event));
+      // const promises = eventList
+      //   .map((event) => ({
+      //     event_id: event.id,
+      //     summary: event.summary,
+      //     type: allTypes[event.type],
+      //     longitude: event.longitude,
+      //     latitude: event.latitude,
+      //     date: event.date,
+      //   }))
+      //   .filter((event) => event.type !== undefined)
+      //   .map((event) => uploadEvent(event));
 
-      await Promise.all(promises);
+      // await Promise.all(promises);
       console.log(`Database setup complete.`);
     } catch (e) {
       console.error(e);
@@ -143,6 +160,7 @@ module.exports = function ({ db }) {
           type: allTypes[event.type],
           longitude: event.longitude,
           latitude: event.latitude,
+          city: event.city,
           date: event.date,
         }))
         .filter((event) => event.type !== undefined)
@@ -156,7 +174,11 @@ module.exports = function ({ db }) {
     };
 
     const interval = setInterval(() => {
-      loop();
+      try {
+        loop();
+      } catch (e) {
+        console.error("COULD NOT FETCH POLISENS API");
+      }
     }, 10000);
   };
 

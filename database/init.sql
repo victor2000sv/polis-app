@@ -9,6 +9,7 @@ CREATE TABLE events (
     type INT NOT NULL,
     longitude DECIMAL(10,6),
     latitude DECIMAL(10,6),
+    city VARCHAR(100),
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (type) REFERENCES types(type_id)
 );
